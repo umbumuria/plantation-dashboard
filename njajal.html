@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Table with Iframe Filter</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; max-height: 400px; overflow: auto; display: block; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; position: sticky; top: 0; z-index: 1; }
+        input { width: 100%; padding: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Interactive Table with Link in Title</h2>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Tahun <input type="text" onkeyup="filterTable(0)" placeholder="Filter Tahun..."></th>
+                <th>Grup <input type="text" onkeyup="filterTable(1)" placeholder="Filter Grup..."></th>
+                <th>Judul <input type="text" onkeyup="filterTable(2)" placeholder="Filter Judul..."></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2023</td>
+                <td>Group A</td>
+                <td><a href="https://example.com" target="_blank">Document 1</a></td>
+            </tr>
+            <tr>
+                <td>2024</td>
+                <td>Group B</td>
+                <td><a href="https://example.com" target="_blank">Document 2</a></td>
+            </tr>
+            <tr>
+                <td>2025</td>
+                <td>Group A</td>
+                <td><a href="https://example.com" target="_blank">Document 3</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function filterTable(columnIndex) {
+            const input = document.querySelectorAll('thead input')[columnIndex].value.toLowerCase();
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+
+            rows.forEach(row => {
+                const cellText = row.cells[columnIndex].textContent.toLowerCase();
+                row.style.display = cellText.includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>

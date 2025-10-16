@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drawdown Calculator</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      font-family: Arial, sans-serif;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    input[type='number'] {
+      width: 80px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Drawdown Calculator</h2>
+  <form id="calcForm">
+    <label>SCALE DOWN: <input type="number" id="scaleDown" value="1000"></label><br><br>
+    <label>LOT: <input type="number" step="0.01" id="lot" value="0.01"></label><br><br>
+    <label>START PRICE ENTRY: <input type="number" id="startPrice" value="93000"></label><br><br>
+    <label>END PRICE: <input type="number" id="endPrice" value="50000"></label><br><br>
+    <button type="button" onclick="calculateDrawdown()">Calculate</button>
+  </form>
+
+  <br>
+  <table id="resultTable">
+    <thead>
+      <tr>
+        <th>ENTRY</th><th>LOT</th><th>ACCUM LOT</th><th>PRICE ENTRY</th><th>AVG PRICE ENTRY</th><th>END PRICE</th><th>DRAWDOWN PER TRANSC</th><th>DRAWDOWN ACCUM</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    function calculateDrawdown() {
+      const scaleDown = parseFloat(document.getElementById('scaleDown').value);
+      const lot = parseFloat(document.getElementById('lot').value);
+      const startPrice = parseFloat(document.getElementById('startPrice').value);
+      const endPrice = parseFloat(document.getElementById('endPrice').value);
+
+      let tableBody = document.querySelector('#resultTable tbody');
+      tableBody.innerHTML = '';
+
+      let totalLot = 0;
+      let totalPriceLot = 0;
+      let drawdownAccum = 0;
+
+      for (let i = 0; i < 10; i++) {
+        const entry = i + 1;
+        const priceEntry = startPrice - (scaleDown * i);
+        totalLot += lot;
+        totalPriceLot += lot * priceEntry;
+        const avgPrice = totalPriceLot / totalLot;
+        const ddPerTrans = ((priceEntry - endPrice) * lot);
+        drawdownAccum += ddPerTrans;
+
+        const row = `<tr>
+          <td>${entry}</td>
+          <td>${lot.toFixed(2)}</td>
+          <td>${totalLot.toFixed(2)}</td>
+          <td>${priceEntry}</td>
+          <td>${avgPrice.toFixed(0)}</td>
+          <td>${endPrice}</td>
+          <td>${ddPerTrans.toFixed(0)}</td>
+          <td>${drawdownAccum.toFixed(0)}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      }
+    }
+
+    window.onload = calculateDrawdown;
+  </script>
+</body>
+</html>

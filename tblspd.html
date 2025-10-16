@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data dari Spreadsheet</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    async function loadData() {
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbzW_MMDw7JFb9joNC3OSQiSKQ1N-BNwpB43PsgaIrFTwGG3CyTfiRex4asgLGtqjNQl3Q/exec");
+        const data = await response.json();
+
+        const table = document.getElementById('data-table');
+        table.innerHTML = "";
+
+        const labels = [];
+        const values = [];
+
+        const summary = {}; // Untuk menyimpan summary berdasarkan Kolom A
+
+        if (Array.isArray(data)) {
+          // Mengumpulkan data untuk tabel dan melakukan summary untuk grafik
+          data.forEach(row => {
+            const [name, value] = row;
+            if (summary[name]) {
+              summary[name] += parseFloat(value) || 0; // Jika sudah ada, tambahkan nilainya
+            } else {
+              summary[name] = parseFloat(value) || 0; // Jika baru, simpan nilai pertama
+            }
+
+            // Menambahkan data ke tabel
+            const tr = document.createElement('tr');
+            const tdName = document.createElement('td');
+            tdName.textContent = name;
+            const tdValue = document.createElement('td');
+            tdValue.textContent = value;
+            tr.appendChild(tdName);
+            tr.appendChild(tdValue);
+            table.appendChild(tr);
+          });
+
+          // Menambahkan data untuk grafik
+          for (const [name, value] of Object.entries(summary)) {
+            labels.push(name);
+            values.push(value);
+          }
+
+          renderChart(labels, values);
+        } else {
+          table.innerHTML = "<tr><td colspan='2'>Data tidak ditemukan atau format tidak sesuai</td></tr>";
+        }
+
+      } catch (error) {
+        console.error("Gagal memuat data:", error);
+        document.getElementById('data-table').innerHTML = "<tr><td colspan='2'>Gagal memuat data</td></tr>";
+      }
+    }
+
+    function renderChart(labels, values) {
+      const ctx = document.getElementById('data-chart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Nilai',
+            data: values,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+    }
+
+    window.onload = loadData;
+  </script>
+  <style>
+    #container { display: flex; gap: 20px; }
+    #chart-container { width: 400px; height: 300px; }
+  </style>
+</head>
+<body>
+  <h3>Data dari Spreadsheet</h3>
+  <div id="container">
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Kolom A</th>
+          <th>Kolom B</th>
+        </tr>
+      </thead>
+      <tbody id="data-table">
+        <tr><td colspan='2'>Memuat data...</td></tr>
+      </tbody>
+    </table>
+    <div id="chart-container">
+      <canvas id="data-chart"></canvas>
+    </div>
+  </div>
+</body>
+</html>

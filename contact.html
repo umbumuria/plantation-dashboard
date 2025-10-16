@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Navigation</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex; /* Membuat sidebar dan konten berada dalam satu baris */
+            background: url('https://24slides.com/templates/assets/templates-previews/7cPELDvvcUelj4QZkYbVjwMdkb9ptWSVHHlLZequ.jpg') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden; /* Menyembunyikan scroll pada halaman utama */
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 180px; /* Lebar sidebar tetap lebih kecil */
+            background-color: rgba(0, 0, 0, 0.5); /* Transparan hitam agar menu terlihat lebih jelas */
+            height: 100vh;
+            padding-top: 20px;
+            position: fixed; /* Memastikan sidebar tetap di tempat saat scroll */
+            top: 0;
+            left: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        /* Normal (Cembung) state */
+        .menu-item:hover {
+            background-color: #4CAF50; /* Mengganti warna tombol saat hover */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Active (Cekung) state with expanded size horizontally */
+        .menu-item.active {
+            background-color: #FF5722; /* Warna tombol saat aktif */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            transform: translateY(3px) scaleX(1.2); /* Memperbesar tombol hanya pada sumbu X */
+            padding: 15px 40px; /* Membuat menu lebih panjang secara horizontal */
+        }
+
+        /* Main content area */
+        .content {
+            margin-left: 180px; /* Sesuaikan dengan lebar sidebar yang baru */
+            width: calc(100% - 180px); /* Konten mengisi sisa layar setelah sidebar */
+            padding: 20px;
+            color: white;
+            height: 100vh;
+            overflow: hidden; /* Menyembunyikan scroll pada konten utama */
+        }
+
+        iframe {
+            width: 100%; /* Agar iframe mengisi lebar konten */
+            height: 100%; /* Mengisi tinggi konten */
+            border: none;
+            overflow-y: auto; /* Mengaktifkan scroll pada iframe saja */
+        }
+
+        /* Heading styling */
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="index.html" class="menu-item" id="home">Home</a> <!-- Mengarahkan ke index.html -->
+        <a href="#services" class="menu-item" id="services">Services</a>
+        <a href="#about" class="menu-item" id="about">About</a>
+        <a href="contact.html" class="menu-item" id="contact">Contact</a>
+    </div>
+
+    <div class="content">
+         <iframe src="https://arifiantohidayatstp.glitch.me/index.html"></iframe>
+    </div>
+
+    <script>
+        // Highlight the active menu item based on the clicked link
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        // Function to check and set active class based on the current page
+        function setActiveMenu() {
+            const currentPage = window.location.pathname.split("/").pop();
+            
+            if (currentPage === "index.html") {
+                document.getElementById('home').classList.add('active');
+            }
+        }
+
+        window.onload = setActiveMenu;
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuItems.forEach(menu => menu.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

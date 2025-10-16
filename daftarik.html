@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Table with Iframe Filter</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; max-height: 400px; overflow: auto; display: block; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; position: sticky; top: 0; z-index: 1; }
+        td { background-color: #ffffff; }
+        input { width: 100%; padding: 5px; }
+    </style>
+</head>
+<body>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>GROUP <input type="text" onkeyup="filterTable(0)" placeholder="Filter plant/SF..."></th>
+                <th>DEPT <input type="text" onkeyup="filterTable(1)" placeholder="Filter Dept..."></th>
+                <th>JUDUL IK <input type="text" onkeyup="filterTable(2)" placeholder="Filter IK..."></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>PLANTATION</td>
+                <td>ESTATE</td>
+                <td><a href="https://hartonoplantation.sharepoint.com/:b:/r/sites/Intranet/ISB/Document%20Management%20System/03%20DOKUMEN/2.%20PLANTATION/01%20Estate/02%20Instruksi%20Kerja/MSM-IK-EST-001-001%20Instruksi%20Kerja%20Ridging.pdf?csf=1&web=1&e=QwhhFH" target="_blank">MSM-IK-EST-001-001 Instruksi Kerja Ridging</a></td>
+            </tr>
+          <tr>
+                <td>PLANTATION</td>
+                <td>ESTATE</td>
+                <td><a href="https://hartonoplantation.sharepoint.com/:b:/r/sites/Intranet/ISB/Document%20Management%20System/03%20DOKUMEN/2.%20PLANTATION/01%20Estate/02%20Instruksi%20Kerja/MSM-IK-EST-001-002%20Instruksi%20Kerja%20Bassal%20Dressing%20Manual.pdf?csf=1&web=1&e=gtjf6s">MSM-IK-EST-001-002 Instruksi Kerja Bassal Dressing ManuaL</a></td>
+            </tr>
+          <tr>
+                <td>PLANTATION</td>
+                <td>ESTATE</td>
+                <td><a href="https://hartonoplantation.sharepoint.com/:b:/r/sites/Intranet/ISB/Document%20Management%20System/03%20DOKUMEN/2.%20PLANTATION/01%20Estate/02%20Instruksi%20Kerja/MSM-IK-EST-001-003%20Instruksi%20Kerja%20Basal%20Dressing%20Mekanis.pdf?csf=1&web=1&e=iHggn9">MSM-IK-EST-001-003 Instruksi Kerja Basal Dressing Mekanis</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function filterTable(columnIndex) {
+            const input = document.querySelectorAll('thead input')[columnIndex].value.toLowerCase();
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+
+            rows.forEach(row => {
+                const cellText = row.cells[columnIndex].textContent.toLowerCase();
+                row.style.display = cellText.includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>

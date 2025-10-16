@@ -1,0 +1,34 @@
+<form id="auditForm">
+  <label>AREA AUDIT:</label>
+  <input type="text" name="area_audit" required><br>
+
+  <label>NAMA AUDITEE:</label>
+  <input type="text" name="nama_auditee" required><br>
+
+  <label>NAMA AUDITOR:</label>
+  <input type="text" name="nama_auditor" required><br>
+
+  <label>PERIODE AUDIT:</label>
+  <input type="text" name="periode_audit" required><br>
+
+  <!-- Tambahkan input lainnya sesuai daftar panjang pertanyaan -->
+  
+  <button type="submit">Kirim</button>
+</form>
+
+<div id="response"></div>
+
+<script>
+  const scriptURL = 'YOUR_SCRIPT_WEBAPP_URL';
+  const form = document.getElementById('auditForm');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    fetch(scriptURL, {
+        method: 'POST',
+        body: new FormData(form)
+      })
+      .then(response => document.getElementById('response').innerHTML = "Data berhasil dikirim!")
+      .catch(error => document.getElementById('response').innerHTML = "Terjadi kesalahan!");
+  });
+</script>

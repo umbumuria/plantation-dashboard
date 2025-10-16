@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KAMISHIBAI PLANTATION</title>
+  <link rel="icon" href="https://res.cloudinary.com/ddhsrvefu/image/upload/v1746171684/kamishibai_ok_zzjj3s.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://res.cloudinary.com/ddhsrvefu/image/upload/v1744159479/Slidesdocs_dark_black_future_medical_data_9a4be803ba_ywgbec.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #e5e7eb;
+      transition: margin-left 0.3s ease;
+    }
+    #content {
+      margin-left: 220px;
+      padding: 20px;
+      transition: margin-left 0.3s ease, opacity 0.3s ease;
+      min-height: 100vh;
+    }
+    .sidebar-hidden #content {
+      margin-left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <div id="content"></div>
+
+  <script>
+    // Load header (sidebar + nav buttons)
+    fetch('header.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('header').innerHTML = data;
+        const current = "home.html";
+        loadPage(current);
+        highlightNav(current);
+
+        // Pasang listener setelah header dimuat
+        document.querySelectorAll('.nav-button').forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            const page = this.getAttribute('href');
+            if (page.startsWith('http')) return; // biarkan link eksternal berjalan normal
+            e.preventDefault();
+            loadPage(page);
+            highlightNav(page);
+          });
+        });
+
+        // Toggle sidebar
+        document.getElementById('toggleSidebar')
+          .addEventListener('click', () => document.body.classList.toggle('sidebar-hidden'));
+      });
+
+    function loadPage(page) {
+      const content = document.getElementById('content');
+      content.style.opacity = 0;
+      fetch(page)
+        .then(res => res.text())
+        .then(data => {
+          const temp = document.createElement('div');
+          temp.innerHTML = data;
+          const inner = temp.querySelector('#content')?.innerHTML || '404 - Page Not Found';
+          setTimeout(() => {
+            content.innerHTML = inner;
+            content.style.opacity = 1;
+          }, 150);
+        });
+    }
+
+    function highlightNav(page) {
+      document.querySelectorAll('.nav-button').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('href') === page);
+      });
+    }
+  </script>
+  
+   <div id="footer"></div>
+<script>
+  // Load footer
+  fetch('footer.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+</script>
+
+</body>
+</html>

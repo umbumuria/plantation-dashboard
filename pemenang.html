@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tampilan Pemenang Lomba">
+    <title>Tampilan Pemenang Lomba</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; text-align: center; }
+        .podium { display: flex; justify-content: center; align-items: flex-end; margin: 20px 0; height: 300px; }
+        .podium div { margin: 0 10px; position: relative; }
+        .podium img { width: 150px; height: 150px; border-radius: 10px; }
+        .podium .winner { font-weight: bold; font-size: 1.2em; position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); }
+        .step { background-color: #f4f4f4; width: 150px; text-align: center; padding: 10px; position: relative; }
+        .step::after { content: attr(data-rank); position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-size: 1.2em; font-weight: bold; }
+        .score { position: absolute; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.7); color: #fff; padding: 5px 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Tampilan Pemenang Lomba</h1>
+
+    <div class="podium">
+        <div class="step" data-rank="Juara 4" style="height: 100px;">
+            <img src="placeholder.jpg" alt="Juara 4">
+            <div class="score">Score: 85</div>
+        </div>
+        <div class="step" data-rank="Juara 2" style="height: 150px;">
+            <img src="placeholder.jpg" alt="Juara 2">
+            <div class="score">Score: 90</div>
+        </div>
+        <div class="step" data-rank="Juara 1" style="height: 200px;">
+            <img src="placeholder.jpg" alt="Juara 1">
+            <div class="score">Score: 95</div>
+        </div>
+        <div class="step" data-rank="Juara 3" style="height: 150px;">
+            <img src="placeholder.jpg" alt="Juara 3">
+            <div class="score">Score: 88</div>
+        </div>
+        <div class="step" data-rank="Juara 5" style="height: 100px;">
+            <img src="placeholder.jpg" alt="Juara 5">
+            <div class="score">Score: 80</div>
+        </div>
+    </div>
+
+    <h2>Score Peserta</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Score Juri 1</th>
+                <th>Score Juri 2</th>
+                <th>Score Juri 3</th>
+                <th>Total Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Peserta 1</td>
+                <td>85</td>
+                <td>90</td>
+                <td>88</td>
+                <td>263</td>
+            </tr>
+            <tr>
+                <td>Peserta 2</td>
+                <td>80</td>
+                <td>85</td>
+                <td>87</td>
+                <td>252</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

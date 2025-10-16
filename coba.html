@@ -1,0 +1,118 @@
+<div id="content" style="padding: 40px 20px;">
+  <h1 style="text-align: center; font-size: 2.5rem; margin-bottom: 50px; text-shadow: 0 0 10px rgba(255,255,255,0.3); color: #fff;">
+    5R UPDATE
+  </h1>
+
+  <div style="display: flex; flex-direction: column; gap: 30px; align-items: center;">
+
+    <!-- Ringkas -->
+    <div style="
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 800px;
+      width: 100%;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    ">
+      <h2 style="font-size: 1.8rem; margin-bottom: 10px;">Score Update 5R</h2> 
+      <p>Singkirkan barang yang tidak diperlukan dari tempat kerja.</p>
+      <div id="table-container" style="margin-top: 20px;"></div>
+      <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+      <script>
+        const sheetURL = 'https://docs.google.com/spreadsheets/d/e/1D9ETydSBD-7XgM-PxK0Q8y4qSHBlt_40obqCe6k5pao/pub?gid=0&single=true&output=csv';
+
+        fetch(sheetURL)
+          .then(response => response.text())
+          .then(csv => {
+            const parsed = Papa.parse(csv, { header: false });
+            const data = parsed.data;
+
+            let table = '<table style="width: 100%; border-collapse: collapse; background: rgba(255, 255, 255, 0.03); border-radius: 10px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);">';
+
+            data.forEach((row, rowIndex) => {
+              if (row.length === 0 || row.every(cell => cell.trim() === '')) return;
+              table += '<tr style="' + (rowIndex === 1 ? 'background: #1e3a8a; color: white; font-weight: bold;' : (rowIndex > 1 ? 'background: rgba(255,255,255,0.05);' : '')) + '">' +
+                row.map(cell => `<td style="padding: 10px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">${cell}</td>`).join('') +
+              '</tr>';
+            });
+
+            table += '</table>';
+            document.getElementById('table-container').innerHTML = table;
+          });
+      </script>
+    </div>
+
+    <!-- Rapi -->
+    <div style="
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 600px;
+      width: 100%;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    ">
+      <h2 style="font-size: 1.8rem; margin-bottom: 10px;">Rapi</h2>
+      <p>Atur barang dengan rapi agar mudah ditemukan dan digunakan.</p>
+    </div>
+
+    <!-- Resik -->
+    <div style="
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 600px;
+      width: 100%;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    ">
+      <h2 style="font-size: 1.8rem; margin-bottom: 10px;">Resik</h2>
+      <p>Bersihkan area kerja secara rutin agar tetap higienis dan aman.</p>
+    </div>
+
+    <!-- Rawat -->
+    <div style="
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 600px;
+      width: 100%;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    ">
+      <h2 style="font-size: 1.8rem; margin-bottom: 10px;">Rawat</h2>
+      <p>Jaga peralatan dan tempat kerja agar tetap dalam kondisi baik.</p>
+    </div>
+
+    <!-- Rajin -->
+    <div style="
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 600px;
+      width: 100%;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    ">
+      <h2 style="font-size: 1.8rem; margin-bottom: 10px;">Rajin</h2>
+      <p>Terapkan 5R secara konsisten sebagai budaya kerja.</p>
+    </div>
+
+  </div>
+</div>
